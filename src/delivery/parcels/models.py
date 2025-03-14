@@ -5,7 +5,7 @@ from delivery.database import Base
 
 class TypeParcels(Base):
     __tablename__ = 'type_parcels'
-    
+
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False, unique=True)
 
