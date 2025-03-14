@@ -1,0 +1,63 @@
+version: '3'
+
+volumes:
+  pg_data:
+
+services:
+  fastapi:
+    build: .
+    container_name: fastapi
+    command: bash -c "cd src && alembic upgrade head && uvicorn delivery.main:app --host 0.0.0.0 --port 8080"
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rabbitmq
+      - redis
+      - db 
+
+  db:
+    image: postgres:13.10
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    
+    
+  rabbitmq:
+    image: rabbitmq:3.10.7-management
+    container_name: rabbitmq
+    env_file:
+      - .env
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    env_file:
+      - .env
+    command: celery --app=src.delivery.config.celery_config:app worker --loglevel=info
+    # command: celery -A src.delivery.core.celery_tasks worker --loglevel=info
+    depends_on:
+      - rabbitmq
+
+
+  celery_beat:
+    build: .
+    container_name: celery_beat
+    command: celery --app=src.delivery.config.celery_config:app beat --loglevel=info
+    # command: celery -A src.delivery.core.celery_tasks beat --loglevel=info
+    depends_on:
+      - rabbitmq
+      - celery_worker
+
+  
