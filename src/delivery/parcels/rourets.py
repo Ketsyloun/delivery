@@ -30,25 +30,6 @@ async def get_parsels_type():
     return await ParcelsTypeDao.find_all()
 
 
-@router.get("/hotels")
-async def get_hotels():
-    r = await get_redis_connection()
-    usd_rate = await r.get('usd_rate')
-    return {"usd_rate": usd_rate}
-
-
-@router.get("/redis/all")
-async def get_all_redis_keys():
-    r = await get_redis_connection()
-    keys = await r.keys("*")
-    data = {}
-    for key in keys:
-        value = await r.get(key)
-        data[key] = value
-
-    return data
-
-
 @router.post("")
 async def post_parsels(parcel: SParcelsPost,
                        response: Response,
