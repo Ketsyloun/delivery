@@ -33,15 +33,19 @@ class BaseDao:
                        type_name: str = None,
                        page: int = None, size: int = None):
         async with asyncs_session_maker() as session:
+
             if cls.model == Parcels:
                 query = select(cls.model).options(
                     joinedload(cls.model.type))
             else:
                 query = select(cls.model)
+
             if id_parcel:
                 query = query.where(cls.model.id.in_(id_parcel))
+
             if type_name:
                 query = query.filter(Parcels.type.has(name=type_name))
+        
             result = await session.execute(query)
             parcels = result.scalars().all()
 
@@ -51,5 +55,5 @@ class BaseDao:
                 parcels = parcels[offset_min:offset_max]
                 response = parcels
                 return response
-            return parcels
 
+            return parcels

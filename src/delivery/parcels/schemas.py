@@ -1,3 +1,4 @@
+from fastapi import Query
 from pydantic import BaseModel
 
 
@@ -12,9 +13,9 @@ class SParcels(BaseModel):
 
 class SParcelsPost(BaseModel):
     name: str
-    weight: float
-    type_id: int
-    parcel_value: float
+    weight: float = Query(ge=0.1)
+    type_id: int = Query(ge=1)
+    parcel_value: float = Query(ge=0)
 
 
 def create_sparcel(p):
@@ -26,3 +27,11 @@ def create_sparcel(p):
         parcel_value=p.parcel_value,
         shipping_cost=p.shipping_cost
     )
+    
+
+class SParcelsType(BaseModel):
+    id: int
+    name: str
+    
+class SMessage(BaseModel):
+    name: str

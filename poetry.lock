@@ -536,6 +536,21 @@ yaml = ["PyYAML (>=3.10)"]
 zookeeper = ["kazoo (>=2.8.0)"]
 
 [[package]]
+name = "loguru"
+version = "0.7.3"
+description = "Python logging made (stupidly) simple"
+category = "main"
+optional = false
+python-versions = "<4.0,>=3.5"
+
+[package.dependencies]
+colorama = {version = ">=0.3.4", markers = "sys_platform == \"win32\""}
+win32-setctime = {version = ">=1.0.0", markers = "sys_platform == \"win32\""}
+
+[package.extras]
+dev = ["pre-commit (==4.0.1)", "tox (==3.27.1)", "tox (==4.23.2)", "pytest (==6.1.2)", "pytest (==8.3.2)", "pytest-cov (==2.12.1)", "pytest-cov (==5.0.0)", "pytest-cov (==6.0.0)", "pytest-mypy-plugins (==1.9.3)", "pytest-mypy-plugins (==3.1.0)", "colorama (==0.4.5)", "colorama (==0.4.6)", "freezegun (==1.1.0)", "freezegun (==1.5.0)", "exceptiongroup (==1.1.3)", "mypy (==v0.910)", "mypy (==v0.971)", "mypy (==v1.4.1)", "mypy (==v1.13.0)", "Sphinx (==8.1.3)", "sphinx-rtd-theme (==3.0.2)", "myst-parser (==4.0.0)", "build (==1.2.2)", "twine (==6.0.1)"]
+
+[[package]]
 name = "mako"
 version = "1.3.9"
 description = "A super-fast templating language that borrows the best ideas from the existing templating languages."
@@ -1002,6 +1017,17 @@ optional = false
 python-versions = ">=3.9"
 
 [[package]]
+name = "win32-setctime"
+version = "1.2.0"
+description = "A small Python utility to set file creation time on Windows"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.extras]
+dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
+
+[[package]]
 name = "yarl"
 version = "1.18.3"
 description = "Yet another URL library"
@@ -1016,8 +1042,8 @@ propcache = ">=0.2.0"
 
 [metadata]
 lock-version = "1.1"
-python-versions = ">=3.9"
-content-hash = "766b313cec3ccf97647733f285857203002f7a06661aad37f807eb05d7533075"
+python-versions = ">=3.9,<4.0"
+content-hash = "93ddbf4dd7a1316df64c93a24c82230daa4ee92c9f638fa3ddc163f8e9d508b1"
 
 [metadata.files]
 aiohappyeyeballs = []
@@ -1057,6 +1083,7 @@ idna = []
 itsdangerous = []
 jinja2 = []
 kombu = []
+loguru = []
 mako = []
 markdown-it-py = []
 markupsafe = []
@@ -1094,4 +1121,5 @@ vine = []
 watchfiles = []
 wcwidth = []
 websockets = []
+win32-setctime = []
 yarl = []

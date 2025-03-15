@@ -7,14 +7,9 @@ load_dotenv()
 
 
 async def get_redis_connection():
-    redis_url = f"redis://{os.getenv('HOST_REDIS')}:{os.getenv('PORT_REDIS')}"
-
-    r = await aioredis.from_url(
-        redis_url,
-        db=int(os.getenv("DB_REDIS"))
-    )
+    r = await aioredis.from_url(os.getenv("REDIS_URL"))
     return r
 
-r = redis.Redis(host=os.getenv("HOST_REDIS"), 
+r = redis.Redis(host=os.getenv("HOST_REDIS"),
                 port=int(os.getenv("PORT_REDIS")),
                 db=int(os.getenv("DB_REDIS")))

@@ -13,7 +13,7 @@ from delivery.database import asyncs_session_maker
 load_dotenv()
 
 
-@app.task
+@app.task()
 def getting_the_dollar_rate():
     response = requests.get(os.getenv("URL_USD"))
     data = response.json()
@@ -22,14 +22,14 @@ def getting_the_dollar_rate():
     return usd_rate
 
 
-@worker_ready.connect
+@worker_ready.connect()
 def on_worker_ready(sender, **kwargs):
     getting_the_dollar_rate.apply_async()
     if not r.exists("parcel_id"):
         r.set("parcel_id", 0)
 
 
-@app.task
+@app.task()
 def post_parcel(parcel: dict, parcel_id: int):
     shipping_cost = (
         parcel["weight"] * 0.05 + parcel["parcel_value"] * 0.01
