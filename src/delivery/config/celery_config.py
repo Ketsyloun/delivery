@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 app = Celery('tasks', broker=os.getenv("CELERY_BROKER_URL"),
              backend=os.getenv("CELERY_RESULT_BACKEND"))
 
@@ -21,3 +22,5 @@ app.conf.beat_schedule = {
         'schedule': crontab(hour=20, minute=0),
     },
 }
+
+app.autodiscover_tasks(['delivery.core'], related_name='celery_tasks')

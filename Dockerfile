@@ -6,8 +6,6 @@ RUN pip install poetry==1.1.13
 
 ENV PATH="/root/.local/bin:$PATH"
 
-RUN poetry --version
-
 COPY pyproject.toml poetry.lock /tmp/
 
 RUN poetry export -f requirements.txt --output requirements.txt --without-hashes

@@ -60,4 +60,6 @@ services:
       - rabbitmq
       - celery_worker
 
+
+
   
